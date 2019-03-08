@@ -22,16 +22,7 @@
           <p>{{usdtAddr.coldAddress}}</p>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="wallet-card-item">
-        <div class="wallet-card-item-img">
-          <img :src="tokenAddr.usdtHotImg" alt="">
-        </div>
-        <div class="wallet-card-item-info">
-          <h3>USDT热钱包地址</h3>
-          <p>地址余额：{{usdtAddr.hotBalance}}</p>
-          <p>{{usdtAddr.hotAddress}}</p>
-        </div>
-      </el-col>
+
     </el-row>
 
 
@@ -55,16 +46,7 @@
           <p>{{btcAddr.coldAddress}}</p>
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="wallet-card-item">
-        <div class="wallet-card-item-img">
-          <img :src="tokenAddr.btcHotImg" alt="">
-        </div>
-        <div class="wallet-card-item-info">
-          <h3>BTC热钱包地址</h3>
-          <p>地址余额：{{btcAddr.hotBalance}}</p>
-          <p>{{btcAddr.hotAddress}}</p>
-        </div>
-      </el-col>
+
     </el-row>
 
 
@@ -112,13 +94,13 @@
   </div>
 </template>
 
-<script>//getAddrInfo
+<script>
 import QRCode from 'qrcode';
 import {mapGetters} from 'vuex';
 import importComponents from '../../components/import-component'
 
 export default {
-  name: "wallet-manage",
+  name: 'wallet-manage',
   components: {
     'import-component': importComponents
   },
@@ -151,10 +133,8 @@ export default {
     this.$store.dispatch('getAddrInfo', 4).then((res) => {
       this.usdtAddr = res;
       let code = QRCode.toDataURL(res.coldAddress, {width:200});
-      let hot = QRCode.toDataURL(res.hotAddress, {width:200});
-      Promise.all([code, hot]).then((res) => {
+      Promise.all([code]).then((res) => {
         this.tokenAddr.usdtColdImg = res[0];
-        this.tokenAddr.usdtHotImg = res[1];
       });
     }).catch()
     this.$store.dispatch('getAddrInfo', 3).then((res) => {
@@ -169,10 +149,8 @@ export default {
     this.$store.dispatch('getAddrInfo', 2).then((res) => {
       this.btcAddr = res;
       let code = QRCode.toDataURL(res.coldAddress, {width:200});
-      let hot = QRCode.toDataURL(res.hotAddress, {width:200});
-      Promise.all([code, hot]).then((res) => {
+      Promise.all([code]).then((res) => {
         this.tokenAddr.btcColdImg = res[0];
-        this.tokenAddr.btcHotImg = res[1];
       });
     }).catch()
   },
